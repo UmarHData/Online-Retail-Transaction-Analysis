@@ -1,75 +1,261 @@
-# ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Online Retail Transaction Analysis
 
-## Template Instructions
+The **Online Retail Transaction Analysis** project analyses retail transaction data to understand sales performance, product performance, customer behaviour and geographic trends.
 
-Welcome,
+The project follows an ETL, exploratory data analysis and machine learning process using Python. Statistical testing is used to investigate relationships within the data, while Linear Regression is used to predict future customer spending. A Tableau dashboard was also created to present the main business findings interactively.
 
-This is the Code Institute student template for the three Data Analytics capstone projects. We have preinstalled all of the tools you need to get started. It's perfectly okay to use this template as the basis for your project submissions. Click the `Use this template` button above to get started.
+![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-You can safely delete the Template Instructions section of this README.md file and modify the remaining paragraphs for your own project. Please do read the Template Instructions at least once, though! It contains some important information about the IDE and the extensions we use.
+---
+## Tableau Dashboard 
+https://public.tableau.com/views/Online-Retail-Transaction-Dashboard/OnlineRetailSalesPerformanceDashboard?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
-If you are working on the first capstone project, you can also delete `.python-version`, `.slugignore`, `Procfile` and `setup.sh` as they are only required for later dashboard projects. 
+## Dataset Content
 
-## How to use this repo
+The project uses an Online Retail transaction dataset containing transactions between December 2010 and December 2011.
 
-1. Use this template to create your GitHub project repo. Click the **Use this template** button, then click **Create a new repository**.
+The original dataset contained **541,909 rows and 8 columns**, including:
 
-1. Copy the URL of your repository to your clipboard.
+- Invoice number
+- Product stock code
+- Product description
+- Quantity
+- Invoice date
+- Unit price
+- Customer ID
+- Country
 
-1. In VS Code, select **File** -> **Open Folder**.
+After cleaning and transformation, the final dataset contained **534,129 rows and 14 columns**.
 
-1. Select your `vscode-projects` folder, then click the **Select Folder** button on Windows, or the **Open** button on Mac.
+Additional variables such as transaction type, transaction category, transaction value, year, month and year-month were created to support the analysis.
 
-1. From the top menu in VS Code, select **Terminal** > **New Terminal** to open a new terminal.
+---
 
-1. In the terminal, type `git clone` followed by the URL of your GitHub repository. Then hit **Enter**. This command will download all the files in your GitHub repository into your vscode-projects folder.
+## Business Requirements
 
-1. In VS Code, select **File** > **Open Folder** again.
+The project aims to answer four main business requirements:
 
-1. This time, navigate to and select the folder for the project you just downloaded. Then, click **Select Folder**.
+1. Analyse overall sales and revenue performance over time.
+2. Identify the strongest-performing products.
+3. Understand customer behaviour and geographic market performance.
+4. Predict future customer spending using historical purchasing behaviour.
 
-1. A virtual environment is necessary when working with Python projects to ensure each project's dependencies are kept separate. You need to create your virtual environment, also called a venv, and then activate it whenever you return to your workspace.
-Click the gear icon in the lower left-hand corner of the screen to open the Manage menu and select **Command Palette** to open the VS Code command palette.
+The results can support decisions around sales planning, marketing, customer targeting and product strategy.
 
-1. In the command palette, type: *create environment* and select **Python: Create Environment…**
+---
 
-1. Choose **Venv** from the dropdown list.
+## Hypothesis and how to validate?
 
-1. Choose the Python version you installed earlier. Currently, we recommend Python 3.12.8
+Three hypotheses were tested during the exploratory analysis.
 
-1. **DO NOT** click the box next to `requirements.txt`; you need to complete additional steps before installing your dependencies. Click **OK**.
+### Hypothesis 1 - UK vs Non-UK Order Value
 
-1. You will see a `.venv` folder appear in the file explorer pane, indicating that the virtual environment has been created.
+**H₀:** There is no significant difference in average order value between UK and non-UK sales.
 
-1. **Important**: Note that the `.venv` folder is in the `.gitignore` file so that Git won't track it.
+A Welch's t-test produced a p-value below 0.05, so the null hypothesis was rejected. This indicates a statistically significant difference between UK and non-UK order values.
 
-1. Return to the terminal by clicking on the TERMINAL tab, or click on the **Terminal** menu and choose **New Terminal** if no terminal is currently open.
+### Hypothesis 2 - Market and Cancellation Behaviour
 
-1. In the terminal, use the command below to install your dependencies. This may take several minutes.
+**H₀:** Cancellation/return status is independent of whether an invoice is from the UK or outside the UK.
 
- ```console
- pip3 install -r requirements.txt
- ```
+A Chi-Square test produced a p-value of **0.000009**, so the null hypothesis was rejected. This suggests that cancellation behaviour is associated with market location.
 
-1. Open the `jupyter_notebooks` directory, and click on the notebook you want to open.
+### Hypothesis 3 - Purchase Frequency and Customer Spending
 
-1. Click the **Kernel** button, then choose **Python Environments**.
+**H₀:** There is no significant relationship between purchase frequency and total customer spending.
 
-Note that the kernel says `Python 3.12.8` as it inherits from the venv, so it will be Python-3.12.8 if that is what is installed on your PC. To confirm this, you can use the command below in a notebook code cell.
+Spearman's correlation produced a coefficient of **0.8067**, showing a strong positive relationship between purchase frequency and total spending.
 
-```console
-! python --version
-```
+---
 
-## Deployment Reminders
+## Project Plan
 
-* The `.python-version`, `.slugignore`, `Procfile` and `setup.sh` files are necessary only if you are deploying a Streamlit app to Heroku as part of your submission for units 2 and 3. 
-* Set the `.python-version` Python version to a [Heroku-22](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack, currently supported version that most closely matches what you used in this project.
-* The project can be deployed to Heroku using the following steps.
+The project was completed in the following stages:
 
-1. Log in to Heroku and create an App
-2. At the **Deploy** tab, select **GitHub** as the deployment method.
-3. Select your repository name and click **Search**. Once it is found, click **Connect**.
-4. Select the branch you want to deploy, then click **Deploy Branch**.
-5. The deployment process should happen smoothly if all deployment files are fully functional. Click the button **Open App** at the top of the page to access your App.
-6. If the slug size is too large, then add large files not required for the app to the `.slugignore` file.
+- Load the original dataset.
+- Investigate the original dataset.
+- Perform ETL.
+- Create useful transaction, date and revenue columns.
+- Perform EDA.
+- Calculate business KPIs and create visualisations.
+- Apply probability and hypothesis testing.
+- Build a Linear Regression model.
+- Evaluate the Linear Regression model.
+- Create a Tableau sales dashboard.
+
+The raw dataset was kept unchanged while the cleaned dataset was exported separately for EDA, machine learning and Tableau.
+
+The methods were selected because they provided a structured way to move from data cleaning to statistical analysis, visualisation and prediction.
+
+---
+
+## The rationale to map the business requirements to the Data Visualisations
+
+The visualisations were selected based on the business questions being investigated.
+
+- **Monthly Net Revenue Line Chart** - shows changes in revenue over time and highlights stronger and weaker trading periods.
+- **Monthly Order Volume Bar Chart** - compares the number of completed orders across different months.
+- **Top 10 Products by Net Revenue** - identifies the products contributing the most revenue.
+- **Net Revenue by Country** - compares geographic market performance.
+- **Customer Analysis** - investigates differences in customer spending and purchasing frequency.
+- **Actual vs Predicted Spending Scatterplot** - evaluates the performance of the machine learning model.
+
+The Tableau dashboard combines the main sales visualisations with interactive country and date filters.
+
+---
+
+## Analysis Techniques Used
+
+The project used several analytical techniques:
+
+- ETL
+- Data Cleaning
+- Descriptive statistics
+- Probability
+- Exploratory Data Analysis
+- Data visualisation
+- Welch's independent t-test
+- Chi-Square test of independence
+- Spearman correlation
+- Linear Regression
+- Train/test splitting
+- Feature scaling with StandardScaler
+- Regression evaluation using MAE, RMSE and R²
+
+Extreme values were investigated rather than automatically removed because some represented genuine retail transactions.
+
+One unusual Customer ID, **15287**, showed activity across several countries that was not representative of a typical individual customer. It was therefore excluded from the individual customer and machine learning analysis.
+
+Generative AI tools were used to support brainstorming, explaining code, improving markdowns and help troubleshoot code. All code and results were tested and reviewed within the project environment.
+
+---
+
+## Key Findings
+
+The analysis identified several important findings:
+
+- Total net revenue was approximately **£9.75 million**.
+- The dataset contained **19,960 completed orders** and **4,338 customers** with completed sales.
+- Average completed order value was approximately **£533.17**.
+- The **United Kingdom** was the largest market, generating approximately **£8.19 million** in net revenue.
+- **REGENCY CAKESTAND 3 TIER** was the highest-revenue product at approximately **£164,459**.
+- Revenue increased strongly between September and November 2011.
+- Purchase frequency had a **strong positive relationship** with total customer spending.
+- Cancellation behaviour differed between UK and non-UK markets.
+- December 2011 only contains transactions up to **9 December**, so it should not be directly compared with complete months.
+
+---
+
+## Machine Learning
+
+A Linear Regression model was created to predict how much an existing customer would spend during the following 30 days.
+
+The model used three historical customer features:
+
+- **Recency** - days since the customer's most recent purchase.
+- **Frequency** - number of previous orders.
+- **Monetary** - total historical spending.
+
+The model was trained using 80% of the customer data and evaluated using the remaining 20%.
+
+### Model Results
+
+- **MAE:** £239.01
+- **RMSE:** £596.99
+- **R²:** 0.450
+
+The R² score shows that approximately 45% of the variation in future customer spending was explained by Recency, Frequency and Monetary behaviour.
+
+The model demonstrated moderate predictive ability and showed that historical purchasing behaviour can provide useful information about future customer value.
+
+### Machine Learning Limitations
+
+Customer spending is highly variable and many customers made no purchases during the future 30-day period.
+
+The model also only uses three customer features, meaning other factors affecting future spending are not considered.
+
+Linear Regression was selected because it is simple and interpretable for a continuous target variable. Future development could compare its performance with models such as Random Forest Regression.
+
+---
+## Dashboard Design
+
+I created the Tableau dashboard to give a simple overview of the main findings from the Online Retail Transaction Analysis project.
+
+The dashboard includes five main sections:
+
+1. Sales KPIs
+2. Monthly Net Revenue
+3. Monthly Order Volume
+4. Top 10 Products by Net Revenue
+5. Net Revenue by Country
+
+The aim of the dashboard is to make the key results easy to understand at a glance. It allows users to quickly see overall sales performance, how revenue changes over time, which products perform best and which countries generate the most revenue.
+
+
+## Project Limitations
+
+The dataset represents one retailer and covers approximately one year, so findings may not generalise to other businesses or longer periods.
+
+December 2011 is incomplete because the dataset ends on 9 December.
+
+Some extreme transactions and unusual customer behaviour also required investigation before analysis.
+
+The Tableau dashboard focuses mainly on sales, product and geographic performance and could be expanded with additional customer and machine learning visualisations.
+
+---
+
+## Development Roadmap
+
+Throughout this project, I improved my skills in data cleaning, exploratory data analysis, statistical testing, machine learning, data visualisation and documenting my work.
+
+I did come across one issue at the start of the project. The VS Code terminal and Python environment were running x86_64, while my Mac was running ARM64. This caused problems with Python packages and dependencies.
+
+I corrected the Python and terminal configuration to use ARM64, rebuilt the virtual environment and reinstalled the required packages.
+
+If I continued developing the project, I would:
+
+Compare Linear Regression with other regression models to see whether prediction performance could be improved.
+
+Explore additional customer features that may help predict future spending more accurately.
+
+Test the model on additional or more recent retail data to see how well it performs on new data.
+
+Add further Tableau visualisations if they provide useful insights for the business.
+
+Continue developing my skills in Python, statistics, machine learning and Tableau.
+
+---
+
+## Main Data Analysis Libraries
+
+- **Pandas** 
+- **NumPy** 
+- **Matplotlib** 
+- **Seaborn** 
+- **Plotly**
+- **SciPy** 
+- **Scikit-learn** 
+- **Jupyter Notebook**
+- **Tableau** 
+
+---
+
+## Credits
+
+- Dataset - https://www.kaggle.com/datasets/abhishekrp1517/online-retail-transactions-dataset
+- Pandas - https://www.w3schools.com/python/pandas/default.asp
+- NumPy - https://www.w3schools.com/python/numpy/default.asp
+- Matplotlib - https://www.w3schools.com/python/matplotlib_intro.asp
+- Seaborn - https://www.w3schools.com/python/numpy/numpy_random_seaborn.asp
+- Plotly - https://www.geeksforgeeks.org/data-visualization/using-plotly-for-interactive-data-visualization-in-python/
+- SciPy - https://www.w3schools.com/python/scipy/index.php
+- Scikit-learn - https://www.geeksforgeeks.org/machine-learning/learning-model-building-scikit-learn-python-machine-learning-library/
+- Tableau - https://help.tableau.com/current/guides/get-started-tutorial/en-us/get-started-tutorial-home.htm
+- ChatGPT
+- Code Institute lms and the Code Institute README template.
+
+---
+
+## Acknowledgements
+
+I would like to thank the **Code Institute mentors and tutors** for their guidance and support throughout the project.
